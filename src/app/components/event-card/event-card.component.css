@@ -1,0 +1,23 @@
+/* .card-body {
+    background-color: #888;
+    color: #fff;
+    width: 12rem;
+    height: 12rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+    background-image: linear-gradient(45deg, #4000ff, magenta);
+    box-shadow: 0 .1rem .4rem #0004;
+    z-index: 100;
+}
+
+.card-subcontent {
+    background-color: #fff3;
+    padding: 1rem;
+    border-radius: 1rem;
+} */
+
+body {
+    background-color: black;
+    color: red;
+}
