@@ -12,14 +12,14 @@ import { PipeTransformConfig, FilterOptions, TimelineEvent, timelineEvents } fro
 import { EventFilterPipe } from "../../pipes/event-filter.pipe";
 
 @Component({
-    selector: 'app-timeline',
+    selector: 'app-timeline-interface',
     standalone: true,
     imports: [CommonModule, ModalModule, HeaderComponent, EventDetailsComponent, EventFilterComponent, EventFilterPipe],
     providers: [BsModalService],
-    templateUrl: './timeline.component.html',
-    styleUrl: './timeline.component.css'
+    templateUrl: './timeline-interface.component.html',
+    styleUrl: './timeline-interface.component.css'
 })
-export class TimelineComponent {
+export class TimelineInterfaceComponent {
 
     timelineWidth: number = 0;
     hoveredEvent: any;
@@ -31,7 +31,6 @@ export class TimelineComponent {
 
     searchText: string = '';
     config: PipeTransformConfig = {} as PipeTransformConfig;
-    arrInput: Array<any> = [0, 1, 2, [[[3, 4]]], 5, 6, [7, 8, 9]];
 
     constructor(
         private elementRef: ElementRef,
