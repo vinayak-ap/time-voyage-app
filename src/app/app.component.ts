@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TimelineInterfaceComponent } from "./components/timeline/timeline-interface.component";
+import { TimelineInterfaceComponent } from "./components/timeline-interface/timeline-interface.component";
 
 @Component({
     selector: 'app-root',
