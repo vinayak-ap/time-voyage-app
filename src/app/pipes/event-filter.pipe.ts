@@ -14,7 +14,7 @@ export class EventFilterPipe implements PipeTransform {
          * This will only search for the title in the event
          */
         if (config.searchText && config.searchText.trim() !== '') {
-            records = records.filter(record => record.title.toLowerCase().includes(config.searchText.toLowerCase()));
+            records = records.filter(record => record.title.toLowerCase().includes(config.searchText.toLowerCase()) || record.date.toString().includes(config.searchText));
         }
 
         /**
