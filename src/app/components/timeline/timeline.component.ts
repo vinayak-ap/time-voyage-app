@@ -1,67 +1,90 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef } from '@angular/core';
+import { ModalModule, BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+// import { FormsModule } from '@angular/forms';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// import { faSearch, faFilter } from '@fortawesome/free-solid-svg-icons';
 
-import { EventCardComponent } from '../event-card/event-card.component';
-import { HeaderComponent } from "../../layout/header/header.component";
-import { FooterComponent } from "../../layout/footer/footer.component";
+import { EventDetailsComponent } from '../event-details/event-details.component';
+import { EventFilterComponent } from '../event-filter/event-filter.component';
+import { HeaderComponent } from "../header/header.component";
+import { PipeTransformConfig, FilterOptions, TimelineEvent, timelineEvents } from "../../helper/timeline-event.helper";
+import { EventFilterPipe } from "../../pipes/event-filter.pipe";
 
 @Component({
     selector: 'app-timeline',
     standalone: true,
-    imports: [CommonModule, EventCardComponent, HeaderComponent, FooterComponent],
+    imports: [CommonModule, ModalModule, HeaderComponent, EventDetailsComponent, EventFilterComponent, EventFilterPipe],
+    providers: [BsModalService],
     templateUrl: './timeline.component.html',
     styleUrl: './timeline.component.css'
 })
 export class TimelineComponent {
+
     timelineWidth: number = 0;
-    hoveredCard: any;
-    timelineItems: any[] = [
-        { title: "Event 1", date: "2022-01-01", description: "Description of Event 1" },
-        { title: "Event 2", date: "2022-03-15", description: "Description of Event 2" },
-        { title: "Event 3", date: "2022-06-30", description: "Description of Event 3" },
-        // Add more items with detailed information
-    ];
+    hoveredEvent: any;
+    timelineEvents: Array<TimelineEvent> = timelineEvents;
+    modalRef: BsModalRef | null = null;
 
-    constructor(private elementRef: ElementRef) { }
+    // faSearch = faSearch;
+    // faFilter = faFilter;
 
-    ngOnInit(): void {
-        // Calculate and set the width of the timeline based on the number of items
-        this.timelineWidth = this.timelineItems.length * 100; // Adjust multiplier as needed
+    searchText: string = '';
+    config: PipeTransformConfig = {} as PipeTransformConfig;
+    arrInput: Array<any> = [0, 1, 2, [[[3, 4]]], 5, 6, [7, 8, 9]];
 
-        this.init();
-    }
+    constructor(
+        private elementRef: ElementRef,
+        private modalService: BsModalService,
+    ) { }
 
-    init() {
-        let timelineWrapper = this.elementRef.nativeElement.querySelector('.timeline_wrapper');
-        let timelines: any = this.elementRef.nativeElement.querySelectorAll('.timeline li .data');
-
-        for (let time of timelines) {
-            // time.onclick = () => time.classList.toggle('show');
-        }
-        // timelineWrapper.addEventListener('mousemove', (event: any) => {
-        //     let timeline = this.elementRef.nativeElement.querySelector('.timeline');
-        //     let scrollWidth = event.pageX / timelineWrapper.clientWidth * (timelineWrapper.clientWidth - timeline.clientWidth);
-
-        //     timeline.style.left = scrollWidth.toFixed(1) + 'px';
-        // })
-
-    }
-
-    onMouseEnter() {
-        console.log('Mouse over the div');
-    }
-
-
-    onMouseLeave() {
-        console.log('Mouse out of the div');
-    }
+    ngOnInit(): void { }
 
     handleTimelineScroll($event: MouseEvent) {
         let timeline = this.elementRef.nativeElement.querySelector('.timeline');
         let wrapper = this.elementRef.nativeElement.querySelector('.timeline-wrapper');
 
+        if (wrapper.clientWidth > timeline.clientWidth) {
+            this.resetTimeline();
+            return;
+        }
         let scrollWidth = $event.pageX / wrapper.clientWidth * (wrapper.clientWidth - timeline.clientWidth);
         timeline.style.left = scrollWidth.toFixed(1) + 'px';
+    }
+
+    handleSearch($event: any) {
+        this.config = (($event && $event.searchText) ? $event : {}) as PipeTransformConfig;
+        this.resetTimeline();
+    }
+
+    onMouseEnter(timelineEvent: TimelineEvent) {
+        this.hoveredEvent = timelineEvent;
+    }
+
+    onMouseLeave(timelineEvent: TimelineEvent) {
+        this.hoveredEvent = null;
+    }
+
+    openEventCard(timelineEvent: TimelineEvent) {
+        let initialState: any = { eventRecord: timelineEvent };
+        this.modalRef = this.modalService.show(EventDetailsComponent, { initialState, class: 'modal-dialog-centered' });
+    }
+
+    openFilterPanel($event: Event) {
+        this.modalRef = this.modalService.show(EventFilterComponent, { class: 'modal-dialog-centered' });
+        this.modalRef.content.onsubmit.subscribe((formData: FilterOptions) => {
+            let config = {} as PipeTransformConfig;
+            config.isFilterApplied = true;
+            config.filterOptions = formData;
+            this.config = config;
+            this.resetTimeline();
+        });
+    }
+
+    resetTimeline() {
+        let timeline = this.elementRef.nativeElement.querySelector('.timeline');
+        timeline.style['left'] = 'auto';
+        timeline.style['justify-content'] = 'center';
     }
 
 }

@@ -1,20 +1,20 @@
 <div class="min-vh-100">
-    <app-header></app-header>
+    <app-header (onsearch)="handleSearch($event)" (onfilter)="openFilterPanel($event)"></app-header>
 
     <div class="timeline-wrapper" (mousemove)="handleTimelineScroll($event)">
         <ul class="timeline">
-            <li *ngFor="let item of [1,2,3,4,5,6,7,8]" data-date="Jan 7, 2022" (mouseenter)="hoveredCard = item"
-                (mouseleave)="hoveredCard = null">
-                <!-- <span class="title">Mother's Birthday</span> -->
-                <div class="data" [ngClass]="{'show': (hoveredCard && hoveredCard === item) }">
-                    <h3>Event Title</h3>
-                    <small>Jan 7, 2022</small>
-                    <!-- <p>Lorem ipsum dolor sit am perfrendis nostrum</p>
-                        <span class="close">Click to close</span> -->
+            <li *ngFor="let timelineEvent of timelineEvents | eventFilter: config"
+                (mouseenter)="onMouseEnter(timelineEvent)" (mouseleave)="onMouseLeave(timelineEvent)"
+                (click)="openEventCard(timelineEvent)">
+                <div class="data card" [ngClass]="{'show': (hoveredEvent && hoveredEvent.id === timelineEvent.id) }">
+                    <img [src]="timelineEvent.image" class="card-img-top" alt="alt_image">
+                    <div class="card-body pt-2">
+                        <h5 class="card-title">{{ timelineEvent.title }}</h5>
+                        <p class="card-text pt-1">{{ timelineEvent.date }}</p>
+                    </div>
                 </div>
+                <div class="event-label text-center">{{ timelineEvent.date }}</div>
             </li>
         </ul>
     </div>
-
-    <app-footer></app-footer>
 </div>

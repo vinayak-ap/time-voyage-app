@@ -1,5 +1,6 @@
 .has-search .form-control {
     padding-left: 2.375rem;
+    border: none;
 }
 
 .has-search .form-control-feedback {

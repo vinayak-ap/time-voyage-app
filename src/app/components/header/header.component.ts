@@ -1,8 +1,8 @@
 // import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faSearch, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faFilter, faClose } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-header',
@@ -14,6 +14,18 @@ import { faSearch, faFilter } from '@fortawesome/free-solid-svg-icons';
 export class HeaderComponent {
     faSearch = faSearch;
     faFilter = faFilter;
+    faClose = faClose;
 
     searchText: string = '';
+
+    @Output() onsearch: EventEmitter<any> = new EventEmitter<any>()
+    @Output() onfilter: EventEmitter<any> = new EventEmitter<any>()
+
+    onSearch($event: Event) {
+        this.onsearch.emit({ searchText: this.searchText });
+    }
+
+    onFilter($event: Event) {
+        this.onfilter.emit();
+    }
 }
