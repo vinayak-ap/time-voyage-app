@@ -49,7 +49,7 @@
 .timeline li::before,
 .timeline li::after,
 .timeline li .title,
-.data {
+.card-data {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -93,7 +93,7 @@
     opacity: 1;
 }
 
-.data {
+.card-data {
     width: 1rem;
     height: 1rem;
     color: #888;
@@ -107,27 +107,15 @@
     transition: .3s ease;
 }
 
-.timeline li:hover .data {
+.timeline li:hover .card-data {
     cursor: pointer;
 }
 
-.data.show {
-    background-color: #888;
-    color: #fff;
+.card-data.show-card {
     width: auto;
     height: auto;
-    padding: .6rem;
     border: none;
     border-radius: .8rem;
-    background-image: linear-gradient(45deg, #2e2c35, rgb(179, 161, 255));
-    box-shadow: 0 .1rem .4rem #0004;
-    z-index: 100;
-}
-
-.data.show>img {
-    width: 10rem;
-    height: 8rem;
-    border-radius: .5rem;
 }
 
 .event-label {

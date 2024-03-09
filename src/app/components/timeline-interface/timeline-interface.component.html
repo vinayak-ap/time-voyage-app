@@ -6,12 +6,8 @@
             <li *ngFor="let timelineEvent of timelineEvents | eventFilter: config"
                 (mouseenter)="onMouseEnter(timelineEvent)" (mouseleave)="onMouseLeave(timelineEvent)"
                 (click)="openEventCard(timelineEvent)">
-                <div class="data card" [ngClass]="{'show': (hoveredEvent && hoveredEvent.id === timelineEvent.id) }">
-                    <img [src]="timelineEvent.image" class="card-img-top" alt="alt_image">
-                    <div class="card-body pt-2">
-                        <h5 class="card-title">{{ timelineEvent.title }}</h5>
-                        <p class="card-text pt-1">{{ timelineEvent.date }}</p>
-                    </div>
+                <div class="card-data" [ngClass]="{'show-card':(hoveredEvent && hoveredEvent.id === timelineEvent.id)}">
+                    <app-event-cards [eventRecord]="timelineEvent"></app-event-cards>
                 </div>
                 <div class="event-label text-center">{{ timelineEvent.date }}</div>
             </li>

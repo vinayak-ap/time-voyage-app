@@ -1,0 +1,17 @@
+.event-card {
+    color: #fff;
+    background-image: linear-gradient(45deg, #2e2c35, rgb(179, 161, 255));
+    box-shadow: 0 .1rem .4rem #0004;
+    z-index: 100;
+}
+
+.card-body {
+    padding: .6rem;
+}
+
+.event-card>img {
+    width: 10rem;
+    height: 8rem;
+    margin: .6rem;
+    border-radius: .5rem;
+}
