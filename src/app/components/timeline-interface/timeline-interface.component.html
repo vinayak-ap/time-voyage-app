@@ -3,7 +3,7 @@
 
     <div class="timeline-wrapper" (mousemove)="handleTimelineScroll($event)">
         <ul class="timeline">
-            <li *ngFor="let timelineEvent of timelineEvents | eventFilter: config"
+            <li *ngFor="let timelineEvent of timelineEvents | eventFilter: config" [style.width.rem]="zoomValue"
                 (mouseenter)="onMouseEnter(timelineEvent)" (mouseleave)="onMouseLeave(timelineEvent)"
                 (click)="openEventCard(timelineEvent)">
                 <div class="card-data" [ngClass]="{'show-card':(hoveredEvent && hoveredEvent.id === timelineEvent.id)}">
@@ -13,4 +13,12 @@
             </li>
         </ul>
     </div>
+
+    <!-- Zoom in/out slider -->
+    <div class="slider">
+        <label for="zoom" class="h5 me-3">Zoom:</label>
+        <input type="range" id="zoom" name="zoom" min="10" max="50" [value]="zoomValue" step="4"
+            (input)="onZoomChange($event)">
+    </div>
+
 </div>
