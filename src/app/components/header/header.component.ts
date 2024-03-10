@@ -1,8 +1,9 @@
 // import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSearch, faFilter, faClose } from '@fortawesome/free-solid-svg-icons';
+import { PipeTransformConfig } from '../../helper/timeline-event.helper';
 
 @Component({
     selector: 'app-header',
@@ -18,11 +19,20 @@ export class HeaderComponent {
 
     searchText: string = '';
 
-    @Output() onsearch: EventEmitter<any> = new EventEmitter<any>()
-    @Output() onfilter: EventEmitter<any> = new EventEmitter<any>()
+    @Output() onsearch: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onfilter: EventEmitter<any> = new EventEmitter<any>();
+
+    constructor(
+        private elementRef: ElementRef,
+    ) { }
 
     onSearch($event: Event) {
-        this.onsearch.emit({ searchText: this.searchText });
+        let config: PipeTransformConfig = new PipeTransformConfig(this.searchText);
+        this.onsearch.emit(config);
+        let input = this.elementRef.nativeElement.querySelector('input');
+        if (input) {
+            input.blur();
+        }
     }
 
     onFilter($event: Event) {
