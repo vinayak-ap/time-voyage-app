@@ -1,8 +1,7 @@
-// import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faSearch, faFilter, faClose } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { PipeTransformConfig } from '../../helper/timeline-event.helper';
 
 @Component({
@@ -15,7 +14,6 @@ import { PipeTransformConfig } from '../../helper/timeline-event.helper';
 export class HeaderComponent {
     faSearch = faSearch;
     faFilter = faFilter;
-    faClose = faClose;
 
     searchText: string = '';
 

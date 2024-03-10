@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { TimelineEvent } from '../../helper/timeline-event.helper';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faVideo, faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-event-details',
@@ -14,7 +13,6 @@ import { faVideo, faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 export class EventDetailsComponent {
 
     eventRecord: TimelineEvent | null = null;
-    faVideo = faPlayCircle;
 
     constructor(public modalRef: BsModalRef) { }
 
