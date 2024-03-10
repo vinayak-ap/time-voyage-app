@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, AbstractControl, Validators, ValidationErrors } from '@angular/forms';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { Operator, FilterOptions } from '../../helper/timeline-event.helper';
+import { FilterOptions, Operator } from '../../helper/timeline-event.helper';
 
 @Component({
     selector: 'app-event-filter',
@@ -36,8 +36,6 @@ export class EventFilterComponent {
             this.updateFormValidators(value);
         })
     }
-
-
 
     onSubmit() {
         if (this.filterForm.invalid) {
