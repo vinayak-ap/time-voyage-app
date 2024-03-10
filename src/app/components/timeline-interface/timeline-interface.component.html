@@ -1,0 +1,16 @@
+<div class="min-vh-100">
+    <app-header (onsearch)="handleSearch($event)" (onfilter)="openFilterPanel($event)"></app-header>
+
+    <div class="timeline-wrapper" (mousemove)="handleTimelineScroll($event)">
+        <ul class="timeline">
+            <li *ngFor="let timelineEvent of timelineEvents | eventFilter: config"
+                (mouseenter)="onMouseEnter(timelineEvent)" (mouseleave)="onMouseLeave(timelineEvent)"
+                (click)="openEventCard(timelineEvent)">
+                <div class="card-data" [ngClass]="{'show-card':(hoveredEvent && hoveredEvent.id === timelineEvent.id)}">
+                    <app-event-cards [eventRecord]="timelineEvent"></app-event-cards>
+                </div>
+                <div class="event-label text-center">{{ timelineEvent.date }}</div>
+            </li>
+        </ul>
+    </div>
+</div>

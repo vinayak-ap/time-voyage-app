@@ -1,0 +1,10 @@
+<ng-container>
+    <div class="event-card" *ngIf="eventRecord; else noRecord">
+        <img [src]="eventRecord.image" class="card-img-top" alt="alt_image">
+        <div class="card-body pt67-2">
+            <h5 class="card-title">{{ eventRecord.title }}</h5>
+            <p class="card-text pt-1">{{ eventRecord.date }}</p>
+        </div>
+    </div>
+    <ng-template #noRecord>No record available to display</ng-template>
+</ng-container>

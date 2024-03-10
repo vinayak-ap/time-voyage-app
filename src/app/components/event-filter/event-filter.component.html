@@ -1,0 +1,79 @@
+<!-- <form [formGroup]="filterForm" class="filter-form">
+    <select formControlName="selectedOption" class="form-select">
+        <option *ngFor="let option of options" [value]="option">{{ option }}</option>
+    </select>
+
+    <div *ngIf="filterForm?.get('selectedOption')?.value !== 'between'">
+        <input type="number" formControlName="date" class="form-control" placeholder="Date">
+    </div>
+
+    <div *ngIf="filterForm?.get('selectedOption')?.value === 'between'">
+        <input type=" number" formControlName="startDate" class="form-control" placeholder="Start Date">
+        <input type="number" formControlName="endDate" class="form-control" placeholder="End Date">
+    </div>
+</form> -->
+
+<div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h3 class="modal-title h3">Filter Events With Ease</h3>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+        <ul class="info-box">
+            <li>Filter can only be applied on the date field</li>
+            <li>Date field is of number type and can be considered as the year value</li>
+            <li>Date field can also accept negetive values. It will be considered as Before Christ (BC)</li>
+        </ul>
+
+        <form #form="ngForm" [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+            <div class="form-group my-2">
+                <label for="email">Operator</label>
+                <select formControlName="operator" class="form-select" id="operator" placeholder="Select operator">
+                    <option *ngFor="let option of options" [value]="option">{{ option | titlecase }}</option>
+                </select>
+            </div>
+
+            <div *ngIf="filterForm?.get('operator')?.value !== 'between'" class="form-group my-2">
+                <label for="date">Date</label>
+                <input id="date" class="form-control"
+                    [ngClass]="{ 'is-invalid': (controls['date'].dirty && controls['date'].invalid) }" type="number"
+                    formControlName="date" placeholder="Enter date">
+                <div *ngIf="controls['date'].dirty && controls['date'].invalid" class="text-danger">
+                    <small>This field is required</small>
+                </div>
+            </div>
+
+            <div *ngIf="filterForm?.get('operator')?.value === 'between'" class="form-group row my-2">
+                <div class="col">
+
+                    <label for="startDate">Start Date</label>
+                    <input id="startDate" class="form-control"
+                        [ngClass]="{ 'is-invalid': (controls['startDate'].dirty && controls['startDate'].invalid) }"
+                        type="number" formControlName="startDate" placeholder="Enter date">
+                    <div *ngIf="controls['startDate'].dirty && controls['startDate'].invalid" class="text-danger">
+                        <small>This field is required</small>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <label for="endDate">End Date</label>
+                    <input id="endDate" class="form-control"
+                        [ngClass]="{ 'is-invalid': (controls['endDate'].dirty && controls['endDate'].invalid) }"
+                        type="number" formControlName="endDate" placeholder="Enter date">
+                    <div *ngIf="controls['endDate'].dirty && controls['endDate'].invalid" class="text-danger">
+                        <small>This field is required</small>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning" (click)="onSubmit()"
+            [disabled]="filterForm.invalid">Apply</button>
+    </div>
+</div>
