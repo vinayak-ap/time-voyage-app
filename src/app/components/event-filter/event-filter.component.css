@@ -17,3 +17,7 @@
 .info-box>li {
     margin-left: 1.2rem;
 }
+
+.is-invalid {
+    box-shadow: 0 0 22px #ff000030 inset;
+}

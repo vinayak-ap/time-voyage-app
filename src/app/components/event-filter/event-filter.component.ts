@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, AbstractControl, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, AbstractControl, Validators, ValidationErrors } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Operator, FilterOptions } from '../../helper/timeline-event.helper';
 
@@ -24,10 +24,20 @@ export class EventFilterComponent {
         this.filterForm = this.formBuilder.group({
             operator: [Operator.between],
             date: [null, []],
-            startDate: [null, [Validators.max(this.filterForm?.get('endDate')?.value)]],
-            endDate: [null, [Validators.min(this.filterForm?.get('startDate')?.value)]],
+            startDate: [null, []],
+            endDate: [null, []],
         });
+
     }
+
+    ngAfterViewInit() {
+        this.updateFormValidators();
+        this.filterForm?.get('operator')?.valueChanges.subscribe(value => {
+            this.updateFormValidators(value);
+        })
+    }
+
+
 
     onSubmit() {
         if (this.filterForm.invalid) {
@@ -44,6 +54,26 @@ export class EventFilterComponent {
 
     get controls(): { [p: string]: AbstractControl } {
         return this.filterForm.controls;
+    }
+
+    updateFormValidators(operator: Operator = Operator.between): void {
+        let dateControl = this.filterForm.get('date');
+        let startDateControl = this.filterForm.get('startDate');
+        let endDateControl = this.filterForm.get('endDate');
+
+        if (operator === Operator.between) {
+            startDateControl?.setValidators(Validators.required);
+            endDateControl?.setValidators(Validators.required);
+            dateControl?.clearValidators();
+        } else {
+            dateControl?.setValidators(Validators.required);
+            startDateControl?.clearValidators();
+            endDateControl?.clearValidators();
+        }
+
+        dateControl?.updateValueAndValidity();
+        startDateControl?.updateValueAndValidity();
+        endDateControl?.updateValueAndValidity();
     }
 
 }

@@ -34,31 +34,33 @@
                 <select formControlName="operator" class="form-select" id="operator" placeholder="Select operator">
                     <option *ngFor="let option of options" [value]="option">{{ option | titlecase }}</option>
                 </select>
-                <!-- <div *ngIf="form.submitted && controls.email.invalid" class="text-danger">
-                            <small *ngIf="controls.email.errors?.required">Email is required.</small>
-                            <small *ngIf="controls.email.errors?['email']">Email is invalid.</small>
-                        </div> -->
             </div>
+
             <div *ngIf="filterForm?.get('operator')?.value !== 'between'" class="form-group my-2">
                 <label for="date">Date</label>
-                <input id="date" class="form-control" type="number" formControlName="date" placeholder="Enter date">
+                <input id="date" class="form-control"
+                    [ngClass]="{ 'is-invalid': (controls['date'].dirty && controls['date'].invalid) }" type="number"
+                    formControlName="date" placeholder="Enter date">
                 <div *ngIf="controls['date'].dirty && controls['date'].invalid" class="text-danger">
-                    <small>Password is required.</small>
+                    <small>This field is required</small>
                 </div>
             </div>
+
             <div *ngIf="filterForm?.get('operator')?.value === 'between'" class="form-group my-2">
                 <label for="startDate">Start Date</label>
-                <input id="startDate" class="form-control" type="number" formControlName="startDate"
-                    placeholder="Enter date">
+                <input id="startDate" class="form-control"
+                    [ngClass]="{ 'is-invalid': (controls['startDate'].dirty && controls['startDate'].invalid) }"
+                    type="number" formControlName="startDate" placeholder="Enter date">
                 <div *ngIf="controls['startDate'].dirty && controls['startDate'].invalid" class="text-danger">
-                    <small>Invalid</small>
+                    <small>This field is required</small>
                 </div>
 
                 <label for="endDate">End Date</label>
-                <input id="endDate" class="form-control" type="number" formControlName="endDate"
-                    placeholder="Enter date">
+                <input id="endDate" class="form-control"
+                    [ngClass]="{ 'is-invalid': (controls['endDate'].dirty && controls['endDate'].invalid) }"
+                    type="number" formControlName="endDate" placeholder="Enter date">
                 <div *ngIf="controls['endDate'].dirty && controls['endDate'].invalid" class="text-danger">
-                    <small>Invalid</small>
+                    <small>This field is required</small>
                 </div>
             </div>
         </form>
@@ -66,6 +68,7 @@
 
     <!-- Modal footer -->
     <div class="modal-footer">
-        <button type="button" class="btn btn-warning" (click)="onSubmit()">Apply</button>
+        <button type="button" class="btn btn-warning" (click)="onSubmit()"
+            [disabled]="filterForm.invalid">Apply</button>
     </div>
 </div>
