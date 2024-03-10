@@ -42,7 +42,6 @@
 
 .timeline li {
     position: relative;
-    width: 20rem;
     background-color: #888;
 }
 
@@ -134,4 +133,14 @@ li:nth-child(odd)>.event-label {
 
 li:nth-child(even)>.event-label {
     margin-top: -4.2rem;
+}
+
+.slider {
+    position: fixed;
+    bottom: 2.4rem;
+    right: 2.4rem;
+}
+
+.slider>input {
+    width: 3rm;
 }

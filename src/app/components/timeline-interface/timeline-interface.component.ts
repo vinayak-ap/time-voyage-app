@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener } from '@angular/core';
 import { ModalModule, BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 
 import { EventCardsComponent } from '../event-cards/event-cards.component';
@@ -24,6 +24,7 @@ export class TimelineInterfaceComponent {
     timelineEvents!: Array<TimelineEvent>;
     modalRef: BsModalRef | null = null;
     searchText: string = '';
+    zoomValue: number = 20;
     config: PipeTransformConfig = {} as PipeTransformConfig;
 
     constructor(
@@ -78,6 +79,20 @@ export class TimelineInterfaceComponent {
 
     onMouseLeave(timelineEvent: TimelineEvent) {
         this.hoveredEvent = null;
+    }
+
+    @HostListener('window:wheel', ['$event'])
+    onMouseScroll(event: WheelEvent) {
+        let delta = Math.sign(event.deltaY) * -1;       //-- Invert the value for natural scroll direction
+        let newValue = this.zoomValue + delta * 4;
+        this.zoomValue = Math.min(Math.max(newValue, 10), 50);
+
+        this.recenterTimeline();
+    }
+
+    onZoomChange($event: any) {
+        this.zoomValue = $event.target.value;
+        this.recenterTimeline();
     }
 
 }
