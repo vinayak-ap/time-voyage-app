@@ -46,21 +46,26 @@
                 </div>
             </div>
 
-            <div *ngIf="filterForm?.get('operator')?.value === 'between'" class="form-group my-2">
-                <label for="startDate">Start Date</label>
-                <input id="startDate" class="form-control"
-                    [ngClass]="{ 'is-invalid': (controls['startDate'].dirty && controls['startDate'].invalid) }"
-                    type="number" formControlName="startDate" placeholder="Enter date">
-                <div *ngIf="controls['startDate'].dirty && controls['startDate'].invalid" class="text-danger">
-                    <small>This field is required</small>
+            <div *ngIf="filterForm?.get('operator')?.value === 'between'" class="form-group row my-2">
+                <div class="col">
+
+                    <label for="startDate">Start Date</label>
+                    <input id="startDate" class="form-control"
+                        [ngClass]="{ 'is-invalid': (controls['startDate'].dirty && controls['startDate'].invalid) }"
+                        type="number" formControlName="startDate" placeholder="Enter date">
+                    <div *ngIf="controls['startDate'].dirty && controls['startDate'].invalid" class="text-danger">
+                        <small>This field is required</small>
+                    </div>
                 </div>
 
-                <label for="endDate">End Date</label>
-                <input id="endDate" class="form-control"
-                    [ngClass]="{ 'is-invalid': (controls['endDate'].dirty && controls['endDate'].invalid) }"
-                    type="number" formControlName="endDate" placeholder="Enter date">
-                <div *ngIf="controls['endDate'].dirty && controls['endDate'].invalid" class="text-danger">
-                    <small>This field is required</small>
+                <div class="col">
+                    <label for="endDate">End Date</label>
+                    <input id="endDate" class="form-control"
+                        [ngClass]="{ 'is-invalid': (controls['endDate'].dirty && controls['endDate'].invalid) }"
+                        type="number" formControlName="endDate" placeholder="Enter date">
+                    <div *ngIf="controls['endDate'].dirty && controls['endDate'].invalid" class="text-danger">
+                        <small>This field is required</small>
+                    </div>
                 </div>
             </div>
         </form>
